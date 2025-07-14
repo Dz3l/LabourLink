@@ -1,0 +1,17 @@
+{
+  "workers": [
+    { "id": "123", "skills": ["masonry", "carpentry"], "location": "Lagos", "experience": 3 },
+    { "id": "124", "skills": ["plumbing", "welding"], "location": "Nairobi", "experience": 5 },
+    { "id": "125", "skills": ["electrical", "carpentry"], "location": "Kampala", "experience": 2 },
+    { "id": "126", "skills": ["masonry"], "location": "Lagos", "experience": 1 },
+    { "id": "127", "skills": ["plumbing"], "location": "Accra", "experience": 7 },
+    { "id": "128", "skills": ["welding", "heavy equipment"], "location": "Nairobi", "experience": 10 }
+  ],
+  "projects": [
+    { "id": "P1", "title": "Residential Building", "skills": ["masonry", "plumbing"], "location": "Lagos", "pay": 25000, "urgency": "urgent" },
+    { "id": "P2", "title": "Commercial Complex", "skills": ["welding", "electrical"], "location": "Nairobi", "pay": 50000, "urgency": "normal" },
+    { "id": "P3", "title": "Road Construction", "skills": ["heavy equipment", "asphalt"], "location": "Nairobi", "pay": 40000, "urgency": "long-term" },
+    { "id": "P4", "title": "House Renovation", "skills": ["carpentry", "electrical"], "location": "Kampala", "pay": 30000, "urgency": "normal" },
+    { "id": "P5", "title": "Bridge Construction", "skills": ["welding", "masonry"], "location": "Lagos", "pay": 60000, "urgency": "urgent" }
+  ]
+}
