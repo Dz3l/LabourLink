@@ -1,9 +1,39 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
+import NationalIdLogin from "@/components/NationalIdLogin";
+import WorkerDashboard from "@/components/WorkerDashboard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { HardHat, Search, User, Star } from "lucide-react";
 
 const Workers = () => {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+
+  const handleLogin = (nationalId: string) => {
+    setLoggedInUser(nationalId);
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
+  };
+
+  if (loggedInUser) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-2xl font-bold">Worker Dashboard</h1>
+            <Button variant="outline" onClick={handleLogout}>
+              Logout
+            </Button>
+          </div>
+          <WorkerDashboard nationalId={loggedInUser} />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -60,10 +90,18 @@ const Workers = () => {
 
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to Start Working?</h2>
-          <Button size="lg" className="mr-4">Login with National ID</Button>
+          <Button size="lg" className="mr-4" onClick={() => setIsLoginOpen(true)}>
+            Login with National ID
+          </Button>
           <Button size="lg" variant="outline">Create Account</Button>
         </div>
       </div>
+
+      <NationalIdLogin 
+        open={isLoginOpen}
+        onOpenChange={setIsLoginOpen}
+        onLogin={handleLogin}
+      />
     </div>
   );
 };
