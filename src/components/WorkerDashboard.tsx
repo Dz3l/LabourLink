@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { mockJobs, workerProfile, Job } from "@/data/mockJobs";
+import { workerProfile, Job } from "@/data/mockJobs";
 import { MapPin, Clock, Users, Star, Phone, Award, Calendar } from "lucide-react";
 
 interface WorkerDashboardProps {
@@ -13,6 +13,30 @@ interface WorkerDashboardProps {
 
 const WorkerDashboard = ({ nationalId }: WorkerDashboardProps) => {
   const [appliedJobs, setAppliedJobs] = useState<string[]>([]);
+  const [recommendedJobs, setRecommendedJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        const response = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            skills: workerProfile.skills,
+            location: workerProfile.location,
+          }),
+        });
+        const data = await response.json();
+        setRecommendedJobs(data);
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+      }
+    };
+
+    fetchRecommendations();
+  }, []);
 
   const handleApplyJob = (jobId: string) => {
     setAppliedJobs(prev => [...prev, jobId]);
@@ -86,11 +110,11 @@ const WorkerDashboard = ({ nationalId }: WorkerDashboardProps) => {
         </CardContent>
       </Card>
 
-      {/* Available Jobs */}
+      {/* Recommended Jobs */}
       <div>
-        <h2 className="text-2xl font-bold mb-4">Available Jobs in Kenya</h2>
+        <h2 className="text-2xl font-bold mb-4">Recommended Jobs for You</h2>
         <div className="grid gap-4">
-          {mockJobs.map((job) => (
+          {recommendedJobs.map((job) => (
             <Card key={job.id} className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="flex items-start justify-between">
